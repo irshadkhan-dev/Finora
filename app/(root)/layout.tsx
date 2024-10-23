@@ -9,7 +9,7 @@ export default function RootLayout({
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarTrigger size={"lg"} className="-ml-1" />
+      <SidebarTrigger size={"lg"} className="-ml-1 max-sm:hidden" />
       <main className="min-h-screen w-full">{children}</main>
     </SidebarProvider>
   );
