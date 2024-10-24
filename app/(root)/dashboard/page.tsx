@@ -8,7 +8,7 @@ export default function Page() {
   return (
     <div className="grid lg:grid-cols-3 grid-cols-1">
       <div className="col-span-1 lg:col-span-2 sm:pr-8 sm:py-12 px-5">
-        <SidebarTrigger />
+        <SidebarTrigger className="sm:hidden" />
         <div className="flex flex-col gap-5 w-full ">
           <div className="flex flex-col gap-2 max-w-full">
             <h1 className="text-2xl font-bold">
