@@ -3,8 +3,12 @@ import { Button } from "@/components/ui/button";
 import { SidebarSeparator, SidebarTrigger } from "@/components/ui/sidebar";
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { CONNECTED_BANKS } from "@/data";
+import { getUserInfo } from "@/lib/actions";
+import { getLoggedInUser } from "@/lib/server/appwrite";
 
-export default function Page() {
+export default async function Page() {
+  const user = await getLoggedInUser();
+
   return (
     <div className="grid lg:grid-cols-3 grid-cols-1">
       <div className="col-span-1 lg:col-span-2 sm:pr-8 sm:py-12 px-5">
@@ -12,7 +16,7 @@ export default function Page() {
         <div className="flex flex-col gap-5 w-full ">
           <div className="flex flex-col gap-2 max-w-full">
             <h1 className="text-2xl font-bold">
-              Welcome, <span className="text-gradient">Irshad</span>
+              Welcome, <span className="text-gradient">{user?.name}</span>
             </h1>
             <p className="text-[#475467] text-sm">
               Access & manage your account and transactions efficiently.

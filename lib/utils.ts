@@ -6,3 +6,15 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const parseStringify = (value: any) => JSON.parse(JSON.stringify(value));
+
+export const encryptId = (id: string) => {
+  return btoa(id);
+};
+
+export const extractCustomerIdFromUrl = async (url: string) => {
+  const parts = url.split("/");
+
+  const customerId = parts[parts.length - 1];
+
+  return customerId;
+};

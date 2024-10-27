@@ -10,13 +10,14 @@ export const AuthFormSchema = (type: string) =>
           }),
 
     lastName:
-      type === "sing-in"
+      type === "sign-in"
         ? z.string().optional()
         : z.string().min(3, {
             message: "Last name is required",
           }),
 
     address1: type === "sign-in" ? z.string().optional() : z.string().max(50),
+
     state:
       type === "sign-in" ? z.string().optional() : z.string().min(2).max(5),
     postalCode:
