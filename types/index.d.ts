@@ -11,6 +11,8 @@ declare type SignUpProps = {
   state: string;
   postalCode: string;
   dateOfBirth: string;
+  city: string;
+  ssn: string;
 };
 
 declare type User = {
@@ -23,7 +25,8 @@ declare type User = {
   lastName: string;
   name: string;
   address1: string;
-
+  city: string;
+  ssn: string;
   state: string;
   postalCode: string;
   dateOfBirth: string;
@@ -63,7 +66,8 @@ declare type NewDwollaCustomerParams = {
   email: string;
   type: string;
   address1: string;
-
+  city: string;
+  ssn: string;
   state: string;
   postalCode: string;
   dateOfBirth: string;
@@ -88,4 +92,57 @@ declare type BankAccountProps = {
   accessToken: string;
   fundingSourceUrl: string | undefined | null;
   sharableId: string;
+};
+
+declare type getBanksProp = {
+  userId: string;
+};
+
+declare type getBankProp = {
+  documentId: string;
+};
+
+declare interface getAccountsProps {
+  userId: string;
+}
+
+declare type Bank = {
+  $id: string;
+  accountId: string;
+  bankId: string;
+  accessToken: string;
+  fundingSourceUrl: string;
+  userId: string;
+  sharableId: string;
+};
+
+declare interface getInstitutionProps {
+  institutionId: string;
+}
+
+declare type getAccountProp = {
+  appwriteItemId: string;
+};
+
+declare interface getTransactionsProps {
+  accessToken: string;
+}
+
+declare type Transaction = {
+  id: string;
+  $id: string;
+  name: string;
+  paymentChannel: string;
+  type: string;
+  accountId: string;
+  amount: number;
+  pending: boolean;
+  category: string;
+  date: string;
+  image: string;
+  type: string;
+  $createdAt: string;
+  channel: string;
+  senderBankId: string;
+  receiverBankId: string;
 };

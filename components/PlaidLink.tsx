@@ -1,11 +1,16 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Button } from "./ui/button";
-import { PlaidLinkOnSuccess, PlaidLinkOptions } from "react-plaid-link";
+import {
+  PlaidLinkOnSuccess,
+  PlaidLinkOptions,
+  usePlaidLink,
+} from "react-plaid-link";
 import { createLinkToken, exchangePublicToken } from "@/lib/actions";
+import { useRouter } from "next/navigation";
 
 const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
   const [token, setToken] = useState("");
-
+  const router = useRouter();
   useEffect(() => {
     const getLinkToken = async () => {
       const data = await createLinkToken(user);
@@ -22,6 +27,8 @@ const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
         public_token: public_token,
         user,
       });
+
+      router.push("/dashboard");
     },
     [user]
   );
@@ -30,14 +37,28 @@ const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
     token,
     onSuccess,
   };
+
+  const { open, ready } = usePlaidLink(config);
   return (
     <>
       {variant === "primary" ? (
-        <Button className="bg-custom-gradient">Connet Bank</Button>
+        <Button
+          className="bg-custom-gradient"
+          onClick={() => open()}
+          disabled={!ready}
+        >
+          Connet Bank
+        </Button>
       ) : variant === "ghost" ? (
         <Button>Connect bank</Button>
       ) : (
-        <Button>Connect bank</Button>
+        <Button
+          className="bg-custom-gradient bg-gradient-to-r from-[#0179FE] to-[#4893FF] text-white"
+          onClick={() => open()}
+          disabled={!ready}
+        >
+          Connect bank
+        </Button>
       )}
     </>
   );

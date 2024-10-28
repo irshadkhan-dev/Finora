@@ -23,12 +23,14 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import PlaidLink from "../PlaidLink";
 import { Loader2 } from "lucide-react";
+import { getLoggedInUser } from "@/lib/server/appwrite";
 
 const AuthFormComponent = ({ type }: { type: string }) => {
   const router = useRouter();
 
   const formSchema = AuthFormSchema(type);
   const [user, setUser] = useState(null);
+
   const [isLoading, setIsLoading] = useState(false);
 
   const { toast } = useToast();
@@ -65,6 +67,8 @@ const AuthFormComponent = ({ type }: { type: string }) => {
           state: data.state!,
           postalCode: data.postalCode!,
           dateOfBirth: data.dateOfBirth!,
+          city: data.city!,
+          ssn: data.ssn!,
         };
 
         const newUser = await SignUpWithCredentials(userData);
@@ -130,7 +134,7 @@ const AuthFormComponent = ({ type }: { type: string }) => {
 
       {user ? (
         <div className="flex flex-col gap-4">
-          <PlaidLink user={user} variant="primary" />
+          <PlaidLink user={user} variant="" />
         </div>
       ) : (
         <>
@@ -168,22 +172,41 @@ const AuthFormComponent = ({ type }: { type: string }) => {
                     />
                   </div>
 
-                  <FormField
-                    control={form.control}
-                    name="address1"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Address</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="Enter your specific address"
-                            {...field}
-                            className="h-10"
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
+                  <div className="flex gap-x-4 ">
+                    <FormField
+                      control={form.control}
+                      name="address1"
+                      render={({ field }) => (
+                        <FormItem className="w-full">
+                          <FormLabel>Address</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Enter your specific address"
+                              {...field}
+                              className="h-10"
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="city"
+                      render={({ field }) => (
+                        <FormItem className="w-full">
+                          <FormLabel>City</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Enter your city"
+                              {...field}
+                              className="h-10"
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                  </div>
 
                   <div className="flex space-x-4">
                     <FormField
@@ -221,24 +244,42 @@ const AuthFormComponent = ({ type }: { type: string }) => {
                       )}
                     />
                   </div>
+                  <div className="flex space-x-4">
+                    <FormField
+                      control={form.control}
+                      name="dateOfBirth"
+                      render={({ field }) => (
+                        <FormItem className="w-full">
+                          <FormLabel>Date of Birth</FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              type="date"
+                              placeholder="dd-mm-yyyy"
+                              className="h-10"
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
 
-                  <FormField
-                    control={form.control}
-                    name="dateOfBirth"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Date of Birth</FormLabel>
-                        <FormControl>
-                          <Input
-                            {...field}
-                            type="date"
-                            placeholder="dd-mm-yyyy"
-                            className="h-10"
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
+                    <FormField
+                      control={form.control}
+                      name="ssn"
+                      render={({ field }) => (
+                        <FormItem className="w-full">
+                          <FormLabel>SSN</FormLabel>
+                          <FormControl>
+                            <Input
+                              {...field}
+                              placeholder="Social Security Number"
+                              className="h-10"
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                  </div>
                 </>
               )}
 

@@ -59,14 +59,6 @@ export const SignUpWithCredentials = async ({
 
   try {
     const { account, database } = await createAdminClient();
-    newUserAccount = await account.create(
-      ID.unique(),
-      email,
-      password,
-      `${firstName} ${lastName}`
-    );
-
-    if (!newUserAccount) throw new Error("Error creating user!");
 
     const dwollaCustomerUrl = await createDwollaCustomer({
       ...userData,
@@ -77,6 +69,15 @@ export const SignUpWithCredentials = async ({
       throw new Error("Error creating dwolla customer ID");
 
     const dwollaCustomerId = extractCustomerIdFromUrl(dwollaCustomerUrl);
+    console.log(dwollaCustomerId);
+    newUserAccount = await account.create(
+      ID.unique(),
+      email,
+      password,
+      `${firstName} ${lastName}`
+    );
+
+    if (!newUserAccount) throw new Error("Error creating user!");
 
     const newUser = await database.createDocument(
       DATABASE_ID!,
@@ -85,8 +86,8 @@ export const SignUpWithCredentials = async ({
       {
         ...userData,
         userId: newUserAccount.$id,
-        dwollaCustomerId,
-        dwollaCustomerUrl,
+        dwollaCustomerId: dwollaCustomerId,
+        dwollaCustomerUrl: dwollaCustomerUrl,
       }
     );
 
@@ -151,7 +152,7 @@ export const createLinkToken = async (user: User) => {
       user: {
         client_user_id: user.$id,
       },
-      client_name: user.name,
+      client_name: `${user.firstName} ${user.lastName}`,
       products: ["auth"] as Products[],
       language: "en",
       country_codes: ["US"] as CountryCode[],
@@ -213,6 +214,38 @@ export const exchangePublicToken = async ({
     });
 
     return { public_exchange_token: "complete" };
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getBanks = async ({ userId }: getBanksProp) => {
+  const { database } = await createAdminClient();
+
+  try {
+    const banks = await database.listDocuments(
+      DATABASE_ID!,
+      BANK_COLLECTION_ID!,
+      [Query.equal("userId", [userId])]
+    );
+
+    return parseStringify(banks.documents);
+  } catch (error) {
+    console.log("Error", error);
+  }
+};
+
+export const getBank = async ({ documentId }: getBankProp) => {
+  const { database } = await createAdminClient();
+
+  try {
+    const bank = await database.listDocuments(
+      DATABASE_ID!,
+      BANK_COLLECTION_ID!,
+      [Query.equal("$id", [documentId])]
+    );
+
+    return parseStringify(bank.documents[0]);
   } catch (error) {
     console.log(error);
   }

@@ -11,7 +11,7 @@ export const encryptId = (id: string) => {
   return btoa(id);
 };
 
-export const extractCustomerIdFromUrl = async (url: string) => {
+export const extractCustomerIdFromUrl = (url: string) => {
   const parts = url.split("/");
 
   const customerId = parts[parts.length - 1];
