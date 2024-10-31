@@ -1,4 +1,5 @@
 import DashBoardCard from "@/components/DashBoardCard";
+import RightSidebar from "@/components/RightSidebar";
 import { Button } from "@/components/ui/button";
 import { SidebarSeparator, SidebarTrigger } from "@/components/ui/sidebar";
 import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -96,7 +97,9 @@ export default async function Page() {
           </div>
         </div>
       </div>
-      <div className="max-lg:hidden col-span-1">rightside bar</div>
+      <div className="max-lg:hidden col-span-1">
+        <RightSidebar />
+      </div>
     </div>
   );
 }

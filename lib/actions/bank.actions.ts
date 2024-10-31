@@ -4,6 +4,7 @@ import { CountryCode } from "plaid";
 import { getBank, getBanks } from ".";
 import { plaidClient } from "../plaid";
 import { parseStringify } from "../utils";
+import { getTransactionsByBankId } from "./transactions";
 
 export const getAccounts = async ({ userId }: getAccountsProps) => {
   try {
@@ -59,21 +60,21 @@ export const getAccount = async ({ appwriteItemId }: getAccountProp) => {
 
     const accountData = accountResponse.data.accounts[0];
 
-    // const transferTransactionsData = await getTransactionsByBankId({
-    //   bankId: bank.$id,
-    // });
+    const transferTransactionsData = await getTransactionsByBankId({
+      bankId: bank.$id,
+    });
 
-    // const transferTransactions = transferTransactionsData.documents.map(
-    //   (transferData: Transaction) => ({
-    //     id: transferData.$id,
-    //     name: transferData.name!,
-    //     amount: transferData.amount!,
-    //     date: transferData.$createdAt,
-    //     paymentChannel: transferData.channel,
-    //     category: transferData.category,
-    //     type: transferData.senderBankId === bank.$id ? "debit" : "credit",
-    //   })
-    // );
+    const transferTransactions = transferTransactionsData.documents.map(
+      (transferData: Transaction) => ({
+        id: transferData.$id,
+        name: transferData.name!,
+        amount: transferData.amount!,
+        date: transferData.$createdAt,
+        paymentChannel: transferData.channel,
+        category: transferData.category,
+        type: transferData.senderBankId === bank.$id ? "debit" : "credit",
+      })
+    );
 
     // get institution info from plaid
     const institution = await getInstitution({
@@ -97,14 +98,14 @@ export const getAccount = async ({ appwriteItemId }: getAccountProp) => {
       appwriteItemId: bank.$id,
     };
 
-    // const allTransactions = [...transactions, ...transferTransactions].sort(
-    //   (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-    // );
+    const allTransactions = [...transactions, ...transferTransactions].sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
 
-    // return parseStringify({
-    //   data: account,
-    //   transactions: allTransactions,
-    // });
+    return parseStringify({
+      data: account,
+      transactions: allTransactions,
+    });
   } catch (error) {
     console.log(error);
   }

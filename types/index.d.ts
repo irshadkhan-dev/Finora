@@ -146,3 +146,7 @@ declare type Transaction = {
   senderBankId: string;
   receiverBankId: string;
 };
+
+declare interface getTransactionsByBankIdProps {
+  bankId: string;
+}
