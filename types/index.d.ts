@@ -88,7 +88,7 @@ declare type AddFundingSourceParams = {
 declare type BankAccountProps = {
   userId: string;
   bankId: string;
-  accountId: string;
+  accountID: string;
   accessToken: string;
   fundingSourceUrl: string | undefined | null;
   sharableId: string;
@@ -147,6 +147,65 @@ declare type Transaction = {
   receiverBankId: string;
 };
 
+declare interface CreateTransactionProps {
+  name: string;
+  amount: string;
+  senderId: string;
+  senderBankId: string;
+  receiverId: string;
+  receiverBankId: string;
+  email: string;
+}
+
 declare interface getTransactionsByBankIdProps {
   bankId: string;
 }
+
+declare interface ChartProps {
+  accounts: string;
+  totalBanks: string;
+  totalCurrentBalance: string;
+}
+
+declare interface SearchParamsProps {
+  searchParams: {
+    id: string;
+    page: string;
+  };
+}
+
+declare interface getUserInfoProps {
+  userId: string;
+}
+
+declare type Account = {
+  id: string;
+  availableBalance: number;
+  currentBalance: number;
+  officialName: string;
+  mask: string;
+  institutionId: string;
+  name: string;
+  type: string;
+  subtype: string;
+  appwriteItemId: string;
+  shareableId: string;
+};
+
+declare interface BankItemTabProps {
+  account: Account;
+  appwriteItemId: string;
+}
+
+declare interface BankInfoProps {
+  account: Account;
+  appwriteItemId?: string;
+  type: "full" | "card";
+}
+
+declare type AccountTypes =
+  | "depository"
+  | "credit"
+  | "loan "
+  | "investment"
+  | "other";

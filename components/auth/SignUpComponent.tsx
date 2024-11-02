@@ -52,8 +52,6 @@ const AuthFormComponent = ({ type }: { type: string }) => {
     },
   });
 
-  console.log(form.formState.errors);
-
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setIsLoading(true);
     try {

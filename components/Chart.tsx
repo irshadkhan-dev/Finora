@@ -41,7 +41,7 @@ const chartConfig = {
   },
 };
 
-const Chart = () => {
+const Chart = ({ accounts, totalBanks, totalCurrentBalance }: ChartProps) => {
   const totalVisitors = React.useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.visitors, 0);
   }, []);
@@ -71,7 +71,9 @@ const Chart = () => {
         <div className="w-full h-full py-5">
           <div className="flex flex-col gap-6">
             <div className="flex justify-between">
-              <p className="font-semibold text-base">2 Banks Account</p>
+              <p className="font-semibold text-base">
+                {totalBanks} Banks Account
+              </p>
               <Link
                 href={"/banks"}
                 className="flex gap-1 text-gradient items-center max-sm:hidden"
@@ -86,7 +88,7 @@ const Chart = () => {
                 Total Current Balance
               </p>
 
-              <AnimatedCount amount={2300} />
+              <AnimatedCount amount={Number(totalCurrentBalance)} />
             </div>
           </div>
         </div>
