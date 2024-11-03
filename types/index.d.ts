@@ -147,6 +147,10 @@ declare type Transaction = {
   receiverBankId: string;
 };
 
+declare interface TransactionTableProps {
+  transactions: Transaction[];
+}
+
 declare interface CreateTransactionProps {
   name: string;
   amount: string;

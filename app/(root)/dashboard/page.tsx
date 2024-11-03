@@ -3,15 +3,15 @@ import BankItemTab from "@/components/BankItemTab";
 import Chart from "@/components/Chart";
 
 import RightSidebar from "@/components/RightSidebar";
+import TransactionsTable from "@/components/TransactionsTable";
 import { Button } from "@/components/ui/button";
 
 import { SidebarSeparator, SidebarTrigger } from "@/components/ui/sidebar";
-import { Table, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CONNECTED_BANKS } from "@/data";
+
 import { getLoggedInUser, getUserInfo } from "@/lib/actions";
 import { getAccount, getAccounts } from "@/lib/actions/bank.actions";
-import { string } from "zod";
 
 export default async function Page({
   searchParams: { id, page },
@@ -23,19 +23,15 @@ export default async function Page({
     userId: user?.$id,
   });
 
-  console.log(user);
-
   if (!accounts) return;
-  console.log(accounts);
-  console.log(accounts?.data[0]);
 
   const appwriteItemId = (id as string) || accounts?.data[0].appwriteItemId;
 
   console.log(appwriteItemId);
 
-  const account = await getAccount({ appwriteItemId });
+  const Account = await getAccount({ appwriteItemId });
 
-  // console.log(account);
+  console.log(Account);
 
   return (
     <div className="grid lg:grid-cols-3 grid-cols-1">
@@ -101,30 +97,12 @@ export default async function Page({
                       appwriteItemId={appwriteItemId}
                       type="full"
                     />
+
+                    <TransactionsTable transactions={Account?.transactions} />
                   </TabsContent>
                 ))}
               </Tabs>
               <div className="border-b w-full border-[#EAECF0]" />
-            </div>
-
-            <div className="flex flex-col gap-5">
-              <div className="w-full">
-                <Table>
-                  <TableHeader className="h-12">
-                    <TableRow className="bg-[#F9FAFB]">
-                      <TableHead className="rounded-t-lg">
-                        Transaction
-                      </TableHead>
-                      <TableHead>Amount</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Date</TableHead>
-                      <TableHead className="rounded-t-lg text-center">
-                        Category
-                      </TableHead>
-                    </TableRow>
-                  </TableHeader>
-                </Table>
-              </div>
             </div>
           </div>
         </div>

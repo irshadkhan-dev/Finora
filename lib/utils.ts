@@ -73,3 +73,72 @@ export function formatAmount(amount: number): string {
 
   return formatter.format(amount);
 }
+
+export const removeSpecialCharacters = (value: string) => {
+  return value.replace(/[^\w\s]/gi, "");
+};
+
+export const getTransactionStatus = (date: Date) => {
+  const today = new Date();
+  const twoDaysAgo = new Date(today);
+  twoDaysAgo.setDate(today.getDate() - 2);
+
+  return date > twoDaysAgo ? "Processing" : "Success";
+};
+
+export const formatDateTime = (dateString: Date) => {
+  const dateTimeOptions: Intl.DateTimeFormatOptions = {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  };
+
+  const dateDayOtions: Intl.DateTimeFormatOptions = {
+    weekday: "short",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  };
+
+  const dateOptions: Intl.DateTimeFormatOptions = {
+    month: "short",
+    year: "numeric",
+    day: "numeric",
+  };
+
+  const timeOptions: Intl.DateTimeFormatOptions = {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  };
+
+  const formattedDateTime: string = new Date(dateString).toLocaleString(
+    "en-US",
+    dateTimeOptions
+  );
+
+  const formattedDateDay: string = new Date(dateString).toLocaleString(
+    "en-US",
+    dateDayOtions
+  );
+
+  const formattedDate: string = new Date(dateString).toLocaleString(
+    "en-US",
+    dateOptions
+  );
+
+  const formattedTime: string = new Date(dateString).toLocaleString(
+    "en-US",
+    timeOptions
+  );
+
+  return {
+    dateTime: formattedDateTime,
+    dateDay: formattedDateDay,
+    dateOnly: formattedDate,
+    timeOnly: formattedTime,
+  };
+};
