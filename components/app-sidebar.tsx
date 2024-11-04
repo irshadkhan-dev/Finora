@@ -30,21 +30,20 @@ const data = {
   ],
   items: [
     { title: "Home", url: "/dashboard", icon: Home },
-    { title: "My Banks", url: "/banks", icon: CircleDollarSign },
+    { title: "My Banks", url: "/my-bank", icon: CircleDollarSign },
     { title: "Transaction History", url: "/history", icon: Sheet },
     { title: "Payment Transfer", url: "/payment-transfer", icon: Wallet },
-    { title: "Connect Bank", url: "/bank-connect", icon: Landmark },
   ],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ user }: { user: any }) {
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible="icon">
       <SidebarHeader className="bg-white">
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent className="bg-white">
-        <NavMain items={data.items} />
+        <NavMain items={data.items} user={user} />
       </SidebarContent>
       <SidebarFooter className="bg-white">
         <NavUser user={data.user} />

@@ -12,6 +12,12 @@ const config: Config = {
       backgroundColor: {
         "custom-gradient": "linear-gradient(to right, #0179FE, #4893FF)",
       },
+      backgroundImage: {
+        "bank-gradient": "linear-gradient(90deg, #0179FE 0%, #4893FF 100%)",
+        "gradient-mesh": "url('/icons/gradient-mesh.svg')",
+        "bank-green-gradient":
+          "linear-gradient(90deg, #01797A 0%, #489399 100%)",
+      },
       colors: {
         fill: {
           1: "rgba(255, 255, 255, 0.10)",
@@ -101,6 +107,7 @@ const config: Config = {
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
         },
+
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

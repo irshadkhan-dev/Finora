@@ -1,7 +1,8 @@
 import React from "react";
 import { Plus } from "lucide-react";
+import BankCard from "./BankCard";
 
-const RightSidebar = () => {
+const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
   return (
     <div className="w-full flex flex-col gap-10 border-l ">
       <div className="flex flex-col ">
@@ -21,20 +22,18 @@ const RightSidebar = () => {
 
             <div className="flex flex-col gap-1 mt-20 ">
               <div className="flex">
-                <span className="font-semibold text-2xl">Irshad Khan</span>
+                <span className="font-semibold text-2xl">{user.name}</span>
               </div>
 
               <div className="flex">
-                <span className="text-base text-[#475467]">
-                  irshadkhan98031@gmail.com
-                </span>
+                <span className="text-base text-[#475467]">{user.email}</span>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col px-6 w-full">
+      <div className="flex flex-col px-6 w-full gap-6">
         <div className="flex justify-between gap-4 items-center">
           <div className=" flex">
             <span>My Banks</span>
@@ -47,6 +46,30 @@ const RightSidebar = () => {
             </span>
           </div>
         </div>
+
+        {banks.length > 0 && (
+          <div className="relative flex flex-1 items-center justify-center gap-5">
+            <div className="relative z-10">
+              <BankCard
+                key={banks[0].id}
+                account={banks[0]}
+                userName={`${user.firstName} ${user.lastName}`}
+                showBalance={false}
+              />
+            </div>
+
+            {banks[1] && (
+              <div className="right-0 z-0 w-[90%] absolute top-8">
+                <BankCard
+                  key={banks[1].id}
+                  account={banks[1]}
+                  userName={`${user.firstName} ${user.lastName}`}
+                  showBalance={false}
+                />
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

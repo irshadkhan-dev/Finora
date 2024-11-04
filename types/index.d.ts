@@ -213,3 +213,15 @@ declare type AccountTypes =
   | "loan "
   | "investment"
   | "other";
+
+declare interface RightSidebarProps {
+  user: User;
+  transactions: Transaction[];
+  banks: Bank[] & Account[];
+}
+
+declare interface CreditCardProps {
+  account: Account;
+  userName: string;
+  showBalance?: boolean;
+}

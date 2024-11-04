@@ -15,8 +15,6 @@ import {
   removeSpecialCharacters,
 } from "@/lib/utils";
 
-import { Dot } from "lucide-react";
-
 const StatusBadge = ({ status }: { status: string }) => {
   return (
     <div
@@ -37,18 +35,32 @@ const StatusBadge = ({ status }: { status: string }) => {
   );
 };
 
+const CategoryBadge = ({ category }: { category: string }) => {
+  return (
+    <div
+      className={`flex justify-center items-center truncate w-fit gap-1 rounded-2xl border-[1.5px] py-[2px] pl-1.5 pr-2 text-[#175CD3]`}
+    >
+      <div className={`size-2 rounded-full flex flex-shrink-0 bg-[#1570EF]`} />
+
+      <span className="w-full">{category}</span>
+    </div>
+  );
+};
+
 const TransactionsTable = ({ transactions }: TransactionTableProps) => {
   return (
     <div className="w-full">
       <Table>
         <TableHeader className="h-12">
           <TableRow className="bg-[#F9FAFB]">
-            <TableHead className="rounded-t-lg">Transaction</TableHead>
-            <TableHead>Amount</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Date</TableHead>
-            <TableHead>Channel</TableHead>
-            <TableHead className="rounded-t-lg ">Category</TableHead>
+            <TableHead className="rounded-t-lg px-2">Transaction</TableHead>
+            <TableHead className="px-2">Amount</TableHead>
+            <TableHead className="px-2">Status</TableHead>
+            <TableHead className="px-2">Date</TableHead>
+            <TableHead className="px-2 max-md:hidden">Channel</TableHead>
+            <TableHead className="rounded-t-lg px-2 max-md:hidden">
+              Category
+            </TableHead>
           </TableRow>
         </TableHeader>
 
@@ -95,7 +107,7 @@ const TransactionsTable = ({ transactions }: TransactionTableProps) => {
                   {transaction.paymentChannel}
                 </TableCell>
                 <TableCell className="pl-2 pr-10 max-md:hidden">
-                  {transaction.category}
+                  <CategoryBadge category={transaction.category} />
                 </TableCell>
               </TableRow>
             );

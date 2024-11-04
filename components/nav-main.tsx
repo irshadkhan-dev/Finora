@@ -9,9 +9,11 @@ import {
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
+import PlaidLink from "./PlaidLink";
 
 export function NavMain({
   items,
+  user,
 }: {
   items: {
     title: string;
@@ -23,13 +25,15 @@ export function NavMain({
       url: string;
     }[];
   }[];
+  user: any;
 }) {
   const pathname = usePathname();
   const { open } = useSidebar();
+
   return (
     <SidebarGroup>
       <SidebarMenu>
-        {items.map((item) => {
+        {items.map((item, index) => {
           const isActive =
             pathname === item.url || pathname.startsWith(`${item.url}/`);
           return (
@@ -51,6 +55,11 @@ export function NavMain({
             </SidebarMenuItem>
           );
         })}
+        <SidebarMenuItem>
+          <SidebarMenuButton asChild>
+            <PlaidLink variant="" user={user} />
+          </SidebarMenuButton>
+        </SidebarMenuItem>
       </SidebarMenu>
     </SidebarGroup>
   );

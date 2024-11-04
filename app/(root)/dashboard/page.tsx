@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { getLoggedInUser, getUserInfo } from "@/lib/actions";
 import { getAccount, getAccounts } from "@/lib/actions/bank.actions";
+import { useEffect } from "react";
 
 export default async function Page({
   searchParams: { id, page },
@@ -27,11 +28,9 @@ export default async function Page({
 
   const appwriteItemId = (id as string) || accounts?.data[0].appwriteItemId;
 
-  console.log(appwriteItemId);
+  console.log(accounts);
 
   const Account = await getAccount({ appwriteItemId });
-
-  console.log(Account);
 
   return (
     <div className="grid lg:grid-cols-3 grid-cols-1">
@@ -108,7 +107,11 @@ export default async function Page({
         </div>
       </div>
       <div className="max-lg:hidden col-span-1">
-        <RightSidebar />
+        <RightSidebar
+          user={user}
+          transactions={Account?.transactions}
+          banks={accounts?.data.slice(0, 2)}
+        />
       </div>
     </div>
   );
