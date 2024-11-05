@@ -1,17 +1,16 @@
 import BankInfo from "@/components/BankInfo";
 import BankItemTab from "@/components/BankItemTab";
 import Chart from "@/components/Chart";
-import { Pagination } from "@/components/Pagination";
 
 import RightSidebar from "@/components/RightSidebar";
 import TransactionsTable from "@/components/TransactionsTable";
 import { Button } from "@/components/ui/button";
 
-import { SidebarSeparator, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { getLoggedInUser, getUserInfo } from "@/lib/actions";
+import { getLoggedInUser } from "@/lib/actions";
 import { getAccount, getAccounts } from "@/lib/actions/bank.actions";
 
 export default async function Page({

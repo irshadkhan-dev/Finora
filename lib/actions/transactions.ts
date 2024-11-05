@@ -1,7 +1,7 @@
 "use server";
 
 import { ID, Query } from "node-appwrite";
-import { plaidClient } from "../plaid";
+
 import { createAdminClient } from "../server/appwrite";
 import { parseStringify } from "../utils";
 

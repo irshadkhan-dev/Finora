@@ -4,7 +4,6 @@ import { CountryCode } from "plaid";
 import { getBank, getBanks } from ".";
 import { plaidClient } from "../plaid";
 import { parseStringify } from "../utils";
-import { getTransactionsByBankId } from "./transactions";
 
 export const getAccounts = async ({ userId }: getAccountsProps) => {
   try {
