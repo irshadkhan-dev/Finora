@@ -42,9 +42,13 @@ const chartConfig = {
 };
 
 const Chart = ({ accounts, totalBanks, totalCurrentBalance }: ChartProps) => {
-  const totalVisitors = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.visitors, 0);
-  }, []);
+  const chartData = accounts.map((bank, index) => ({
+    bankName: bank.name,
+    balance: bank.currentBalance,
+
+    fill: `hsl(var(--chart-${index + 1}))`,
+  }));
+
   return (
     <Card className="w-full">
       <CardContent className="flex">
@@ -59,8 +63,8 @@ const Chart = ({ accounts, totalBanks, totalCurrentBalance }: ChartProps) => {
             />
             <Pie
               data={chartData}
-              dataKey="visitors"
-              nameKey="browser"
+              dataKey="balance"
+              nameKey="bankName"
               innerRadius={50}
               strokeWidth={6}
               className=""

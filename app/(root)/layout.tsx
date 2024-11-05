@@ -2,12 +2,15 @@ import { AppSidebar } from "@/components/app-sidebar";
 
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { getLoggedInUser } from "@/lib/actions";
+import { redirect } from "next/navigation";
 import React from "react";
 
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const user = await getLoggedInUser();
+
+  if (!user) redirect("/signin");
   return (
     <SidebarProvider>
       <AppSidebar user={user} />

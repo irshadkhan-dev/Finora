@@ -30,7 +30,7 @@ const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
 
       console.log(publicToken);
 
-      router.push("/dashboard");
+      router.push("/");
     },
     [user]
   );

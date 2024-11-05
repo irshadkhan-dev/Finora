@@ -1,8 +1,12 @@
 import React from "react";
 import { Plus } from "lucide-react";
 import BankCard from "./BankCard";
+import Category from "./Category";
+import { countTransactionCategories } from "@/lib/utils";
+import { UserCircle2Icon } from "lucide-react";
 
 const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
+  const categories: CategoryCount[] = countTransactionCategories(transactions!);
   return (
     <div className="w-full flex flex-col gap-10 border-l ">
       <div className="flex flex-col ">
@@ -17,12 +21,14 @@ const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
         <div className="flex flex-col w-full relative">
           <div className="flex flex-col px-6 gap-6">
             <div className="size-24 border-4 border-white rounded-full shadow-lg absolute -top-10">
-              <img src="/icons/irshad.png" alt="" className="" />
+              <UserCircle2Icon className="size-full" />
             </div>
 
             <div className="flex flex-col gap-1 mt-20 ">
               <div className="flex">
-                <span className="font-semibold text-2xl">{user.name}</span>
+                <span className="font-semibold text-2xl">
+                  {user.firstName} {user.lastName}
+                </span>
               </div>
 
               <div className="flex">
@@ -47,22 +53,22 @@ const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
           </div>
         </div>
 
-        {banks.length > 0 && (
+        {banks!.length > 0 && (
           <div className="relative flex flex-1 items-center justify-center gap-5">
             <div className="relative z-10">
               <BankCard
-                key={banks[0].id}
-                account={banks[0]}
+                key={banks![0].id}
+                account={banks![0]}
                 userName={`${user.firstName} ${user.lastName}`}
                 showBalance={false}
               />
             </div>
 
-            {banks[1] && (
+            {banks![1] && (
               <div className="right-0 z-0 w-[90%] absolute top-8">
                 <BankCard
-                  key={banks[1].id}
-                  account={banks[1]}
+                  key={banks![1].id}
+                  account={banks![1]}
                   userName={`${user.firstName} ${user.lastName}`}
                   showBalance={false}
                 />
@@ -70,6 +76,16 @@ const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
             )}
           </div>
         )}
+
+        <div className="mt-10 flex flex-1 flex-col gap-6">
+          <h2 className="header-2">Top categories</h2>
+
+          <div className="space-y-5">
+            {categories.map((category, index) => (
+              <Category key={category.name} category={category} />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

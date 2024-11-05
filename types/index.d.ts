@@ -1,3 +1,12 @@
+/* eslint-disable no-unused-vars */
+
+declare type SearchParamProps = {
+  params: { [key: string]: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+// ========================================
+
 declare interface AuthFormProps {
   type: "sign-in" | "sign-up";
 }
@@ -23,7 +32,7 @@ declare type User = {
   dwollaCustomerUrl: string;
   firstName: string;
   lastName: string;
-  name: string;
+  name;
   address1: string;
   city: string;
   ssn: string;
@@ -31,6 +40,12 @@ declare type User = {
   postalCode: string;
   dateOfBirth: string;
 };
+
+declare interface RightSidebarProps {
+  user: User;
+  transactions?: Transaction[];
+  banks?: Bank[] & Account[];
+}
 
 declare type SignInProps = {
   email: string;
@@ -166,7 +181,7 @@ declare interface getTransactionsByBankIdProps {
 }
 
 declare interface ChartProps {
-  accounts: string;
+  accounts: Account[];
   totalBanks: string;
   totalCurrentBalance: string;
 }
@@ -225,3 +240,37 @@ declare interface CreditCardProps {
   userName: string;
   showBalance?: boolean;
 }
+declare interface HeaderBoxProps {
+  type?: "title" | "greeting";
+  title: string;
+  subtext: string;
+  user?: string;
+}
+
+declare interface getBankByAccountIdProps {
+  accountId: string;
+}
+
+declare interface BankDropdownProps {
+  accounts: Account[];
+  setValue?: UseFormSetValue<any>;
+  otherStyles?: string;
+}
+declare interface PaymentTransferFormProps {
+  accounts: Account[];
+}
+
+declare interface PaginationProps {
+  page: number;
+  totalPages: number;
+}
+
+declare interface CategoryProps {
+  category: CategoryCount;
+}
+
+declare type CategoryCount = {
+  name: string;
+  count: number;
+  totalCount: number;
+};

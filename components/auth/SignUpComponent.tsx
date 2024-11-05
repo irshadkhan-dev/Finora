@@ -23,7 +23,6 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import PlaidLink from "../PlaidLink";
 import { Loader2 } from "lucide-react";
-import { getLoggedInUser } from "@/lib/server/appwrite";
 
 const AuthFormComponent = ({ type }: { type: string }) => {
   const router = useRouter();
@@ -93,17 +92,12 @@ const AuthFormComponent = ({ type }: { type: string }) => {
         });
 
         if (response.error) {
-          const finalTitle = response.error.response.type.split("_").join(" ");
-          toast({
-            title: finalTitle,
-            description: response.error.response.message,
-            variant: "destructive",
-          });
+          console.log(response);
         }
 
         console.log(response.success);
 
-        if (response.success) router.push("/dashboard");
+        if (response.success) router.push("/");
       }
     } catch (error) {
       console.log(error);
@@ -343,7 +337,7 @@ const AuthFormComponent = ({ type }: { type: string }) => {
                 ? "Already have an account?"
                 : "Dont have an account?"}
               <span className="text-primary">
-                <Link href={"/signin"}>
+                <Link href={"/signup"}>
                   {" "}
                   {type === "sign-up" ? "Sign in" : "Sign up"}
                 </Link>

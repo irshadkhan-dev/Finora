@@ -29,14 +29,14 @@ const data = {
     },
   ],
   items: [
-    { title: "Home", url: "/dashboard", icon: Home },
+    { title: "Home", url: "/", icon: Home },
     { title: "My Banks", url: "/my-bank", icon: CircleDollarSign },
-    { title: "Transaction History", url: "/history", icon: Sheet },
+    { title: "Transaction History", url: "/transaction-history", icon: Sheet },
     { title: "Payment Transfer", url: "/payment-transfer", icon: Wallet },
   ],
 };
 
-export function AppSidebar({ user }: { user: any }) {
+export function AppSidebar({ user }: RightSidebarProps) {
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader className="bg-white">
@@ -46,7 +46,7 @@ export function AppSidebar({ user }: { user: any }) {
         <NavMain items={data.items} user={user} />
       </SidebarContent>
       <SidebarFooter className="bg-white">
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

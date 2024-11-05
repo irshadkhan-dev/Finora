@@ -60,6 +60,8 @@ export const getUserInfo = async ({ userId }: getUserInfoProps) => {
       [Query.equal("userId", [userId])]
     );
 
+    console.log(user);
+
     return parseStringify(user.documents[0]);
   } catch (error) {
     console.log("Error", error);
@@ -138,7 +140,7 @@ export const SignInWithCredentials = async ({
       secure: true,
     });
 
-    const user = await getUserInfo({ userId: session.$id });
+    const user = await getUserInfo({ userId: session.userId });
 
     return { success: parseStringify(user) };
   } catch (error) {
@@ -214,7 +216,7 @@ export const exchangePublicToken = async ({
       sharableId: encryptId(accountData.account_id),
     });
 
-    revalidatePath("/dashboard");
+    revalidatePath("/");
 
     return { publicTokenExchange: "complete" };
   } catch (error) {
@@ -267,3 +269,35 @@ export async function getLoggedInUser() {
     return null;
   }
 }
+
+export const getBankByAccountId = async ({
+  accountId,
+}: getBankByAccountIdProps) => {
+  try {
+    const { database } = await createAdminClient();
+
+    const bank = await database.listDocuments(
+      DATABASE_ID!,
+      BANK_COLLECTION_ID!,
+      [Query.equal("accountId", [accountId])]
+    );
+
+    if (bank.total !== 1) return null;
+
+    return parseStringify(bank.documents[0]);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const logoutAccount = async () => {
+  try {
+    const { account } = await createSessionClient();
+
+    cookies().delete("appwrite-session");
+
+    await account.deleteSession("current");
+  } catch (error) {
+    return null;
+  }
+};
