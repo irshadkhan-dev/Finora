@@ -27,8 +27,6 @@ export default async function Page({
 
   const appwriteItemId = (id as string) || accounts?.data[0].appwriteItemId;
 
-  console.log(accounts);
-
   const Account = await getAccount({ appwriteItemId });
 
   return (

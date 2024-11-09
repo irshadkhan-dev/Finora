@@ -9,8 +9,6 @@ const BankItemTab = ({ account, appwriteItemId }: BankItemTabProps) => {
   const isActive = appwriteItemId === account?.appwriteItemId;
   const router = useRouter();
 
-  console.log(isActive);
-
   const handleBankChange = () => {
     const newUrl = formUrlQuery({
       params: searchParams.toString(),

@@ -71,16 +71,12 @@ const AuthFormComponent = ({ type }: { type: string }) => {
         const newUser = await SignUpWithCredentials(userData);
 
         if (newUser.error) {
-          const finalTitle = newUser.error.response.type.split("_").join(" ");
-
           toast({
-            title: finalTitle,
-            description: newUser.error.response.message,
+            title: "Failed to create user. Please try again!",
+            description: "Request failed due to internal server",
             variant: "destructive",
           });
         }
-
-        console.log(newUser.success);
 
         setUser(newUser.success);
       }
@@ -92,10 +88,12 @@ const AuthFormComponent = ({ type }: { type: string }) => {
         });
 
         if (response.error) {
-          console.log(response);
+          toast({
+            title: "Invalid credentials",
+            description: "Error while signing in, Check your credentials",
+            variant: "destructive",
+          });
         }
-
-        console.log(response.success);
 
         if (response.success) router.push("/");
       }
@@ -246,8 +244,7 @@ const AuthFormComponent = ({ type }: { type: string }) => {
                           <FormControl>
                             <Input
                               {...field}
-                              type="date"
-                              placeholder="dd-mm-yyyy"
+                              placeholder="YYYY-MM-DD"
                               className="h-10"
                             />
                           </FormControl>
@@ -337,7 +334,7 @@ const AuthFormComponent = ({ type }: { type: string }) => {
                 ? "Already have an account?"
                 : "Dont have an account?"}
               <span className="text-primary">
-                <Link href={"/signup"}>
+                <Link href={`${type === "sign-up" ? "/signin" : "/signup"}`}>
                   {" "}
                   {type === "sign-up" ? "Sign in" : "Sign up"}
                 </Link>

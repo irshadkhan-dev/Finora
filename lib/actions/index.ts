@@ -60,8 +60,6 @@ export const getUserInfo = async ({ userId }: getUserInfoProps) => {
       [Query.equal("userId", [userId])]
     );
 
-    console.log(user);
-
     return parseStringify(user.documents[0]);
   } catch (error) {
     console.log("Error", error);
@@ -120,7 +118,6 @@ export const SignUpWithCredentials = async ({
 
     return { success: parseStringify(newUser) };
   } catch (error) {
-    console.log("Error made by me", error);
     return { error: parseStringify(error) };
   }
 };
