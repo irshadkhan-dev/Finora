@@ -78,6 +78,14 @@ const AuthFormComponent = ({ type }: { type: string }) => {
           });
         }
 
+        if (newUser.error) {
+          toast({
+            title: "Failed to create user. Please try again!",
+            description: "Request failed due to internal server",
+            variant: "destructive",
+          });
+        }
+
         setUser(newUser.success);
       }
 
@@ -219,7 +227,7 @@ const AuthFormComponent = ({ type }: { type: string }) => {
                     <FormField
                       control={form.control}
                       name="postalCode"
-                      render={({ field }) => (
+                      render={({ field, fieldState }) => (
                         <FormItem className="w-full">
                           <FormLabel>Postal Code</FormLabel>
                           <FormControl>
@@ -229,7 +237,11 @@ const AuthFormComponent = ({ type }: { type: string }) => {
                               className="h-10"
                             />
                           </FormControl>
-                          <FormMessage />
+                          {fieldState.error && (
+                            <FormMessage>
+                              {fieldState.error.message}
+                            </FormMessage>
+                          )}
                         </FormItem>
                       )}
                     />
@@ -255,7 +267,7 @@ const AuthFormComponent = ({ type }: { type: string }) => {
                     <FormField
                       control={form.control}
                       name="ssn"
-                      render={({ field }) => (
+                      render={({ field, fieldState }) => (
                         <FormItem className="w-full">
                           <FormLabel>SSN</FormLabel>
                           <FormControl>
@@ -265,6 +277,12 @@ const AuthFormComponent = ({ type }: { type: string }) => {
                               className="h-10"
                             />
                           </FormControl>
+
+                          {fieldState.error && (
+                            <FormMessage>
+                              {fieldState.error.message}
+                            </FormMessage>
+                          )}
                         </FormItem>
                       )}
                     />
